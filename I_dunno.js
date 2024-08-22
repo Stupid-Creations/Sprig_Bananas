@@ -2,7 +2,10 @@ const player = "p"
 const player2 = "a"
 const spike = "s"
 const sword = "S"
-
+const walksound = tune`
+104.52961672473867: C4-104.52961672473867 + D4-104.52961672473867 + E4-104.52961672473867 + F4-104.52961672473867 + G4-104.52961672473867,
+3240.4181184668987`
+const ground_grass = "g"
 setLegend(
   [ player, bitmap`
 ................
@@ -40,42 +43,59 @@ setLegend(
 ....00..00......`],
   [sword, bitmap`
 ................
-..0.............
-.000............
-00L00...........
-0L110...........
-0L110...........
-0L110...........
-0L110...........
-0L110...........
-0L110...........
-0L110...........
-0L110...........
-0C6C00..........
-00000...........
-.000............
-.000............`],
+........0.......
+.......000......
+......00L00.....
+......0L110.....
+......0L110.....
+......0L110.....
+......0L110.....
+......0L110.....
+......0L110.....
+......0L110.....
+......0L110.....
+....000C6C000...
+......00000.....
+.......000......
+.......000......`],
   [spike, bitmap`
 ......00........
 ......00........
-......00........
-.....0C0........
-.....0C0........
-.....0C0........
-....0CCC0.......
-....0CCC0.......
-....0CCCC0......
-....0CCCC0......
-...0CCCCC0......
-...0CCCCC0......
-..0CCCCCC00.....
-..0CCCCCCC0.....
-..0CCCCCCC0.....
-................`]
+......10........
+.....010........
+.....010........
+.....010........
+....0L110.......
+....0L110.......
+....0L1110......
+....0L1110......
+...0LL1110......
+...0LL1110......
+..0LLLL1100.....
+..0LLLLL110.....
+..0LLLLLL10.....
+................`],
+  [ground_grass, bitmap`
+CCCCCCCCCCCCCCCC
+CCCCCCCCCCCCCCCC
+CCCCCCCCCCCCCCCC
+CCCCCCCCCCCCHHCC
+CCCCCCCCCC88HHCC
+CCCCCCCCCC884CCC
+CCCCCCCCCCCC4CCC
+CCCCCCCCCCCCCCCC
+CCCCCCCCCCCCCCCC
+CCCCCCCCCCCCCCCC
+CCCCCCCCCCCCCCCC
+CCCC33CCCCCCCCCC
+CCDDD3CCCCCCCCCC
+CCDD4CCCCCCCCCCC
+CCCC4CCCCCCCCCCC
+CCCCCCCCCCCCCCCC`],
   
 )
 
-setSolids([])
+setSolids([]);
 
 
 let level = 0
@@ -101,6 +121,7 @@ const levels = [
 ]
 
 setMap(levels[level])
+setBackground(ground_grass)
 
 setPushables({
   [ player ]: [], [player2]: []
@@ -108,60 +129,88 @@ setPushables({
 
 onInput("i", () => {
   getFirst(player2).y -= 1
+  playTune(walksound)
+
 })
 
 
 onInput("j", () => {
   getFirst(player2).x -= 1
+  getAll(sword)[1].x = getFirst(player2).x+1;
+  playTune(walksound)
+
 })
 
 
 onInput("k", () => {
   getFirst(player2).y += 1
+  playTune(walksound)
+
 })
 
 
 onInput("l", () => {
   getFirst(player2).x += 1
+  getAll(sword)[1].x = getFirst(player2).x+1;
+  playTune(walksound)
+
 })
 
 onInput("s", () => {
   getFirst(player).y += 1
+  playTune(walksound)
+
+  
 })
 
 
 onInput("w", () => {
   getFirst(player).y -= 1
+  playTune(walksound)
+
 })
 
 
 onInput("a", () => {
+  if (level === 1){
+    setMap(levels[0])
+    level = 0}
+  clearText()
   getFirst(player).x -= 1
+  getAll(sword)[0].x = getFirst(player).x + 1
+  playTune(walksound)
+
+  
 })
 
 
 onInput("d", () => {
   getFirst(player).x += 1
+  getAll(sword)[0].x = getFirst(player).x + 1
+  playTune(walksound)
+
 })
 
-afterInput(() => {getAll(sword)[0].x = getFirst(player).x + 1;
-                  getAll(sword)[1].x = getFirst(player2).x+1;
+afterInput(() =>  {
                   getAll(sword)[0].y = getFirst(player).y ;
                   getAll(sword)[1].y = getFirst(player2).y;
 if( tilesWith(player,spike).length > 0|| tilesWith(player,sword).length>0){
 setMap(levels[1])
-  addText("player 2 won!", { 
-  x: 3,
+  level = 1
+  addText("player 2 won!\n \n \n \n \n  press A", { 
+  x: 4,
   y: 1,
   color: color`9`
-})
+});
 };if( tilesWith(player2,spike).length > 0 || tilesWith(player2,sword).length>0){
 setMap(levels[1])
-  addText("player 1 won!", { 
-  x: 3,
+  level = 1
+  addText("player 1 won!\n \n \n \n \n  press A", { 
+  x: 4,
   y: 1,
   color: color`6`
-})
+});
 };if(Math.random()>0.6){addSprite(Math.floor(Math.random() * 11),Math.floor(Math.random() * 11),spike)}})
+
 
 
