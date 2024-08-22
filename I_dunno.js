@@ -99,7 +99,14 @@ setSolids([]);
 
 
 let level = 0
-const levels = [
+const levels = [map `
+.......
+.......
+..sss..
+.saSps.
+..sss..
+.......
+.......`,
   map`
 ..........
 ..........
@@ -127,7 +134,17 @@ setPushables({
   [ player ]: [], [player2]: []
 })
 
+addText("Gone Bananas \n \n   press I", { 
+  x: 4,
+  y: 1,
+  color: color`7`
+});
+
 onInput("i", () => {
+  if(level === 0){
+    level = 1
+    clearText()
+  }
   getFirst(player2).y -= 1
   playTune(walksound)
 
@@ -172,9 +189,9 @@ onInput("w", () => {
 
 
 onInput("a", () => {
-  if (level === 1){
-    setMap(levels[0])
-    level = 0}
+  if (level === 2){
+    setMap(levels[1])
+    level = 1}
   clearText()
   getFirst(player).x -= 1
   getAll(sword)[0].x = getFirst(player).x + 1
@@ -196,7 +213,7 @@ afterInput(() =>  {
                   getAll(sword)[1].y = getFirst(player2).y;
 if( tilesWith(player,spike).length > 0|| tilesWith(player,sword).length>0){
 setMap(levels[1])
-  level = 1
+  level = 2
   addText("player 2 won!\n \n \n \n \n  press A", { 
   x: 4,
   y: 1,
@@ -204,7 +221,7 @@ setMap(levels[1])
 });
 };if( tilesWith(player2,spike).length > 0 || tilesWith(player2,sword).length>0){
 setMap(levels[1])
-  level = 1
+  level = 2
   addText("player 1 won!\n \n \n \n \n  press A", { 
   x: 4,
   y: 1,
