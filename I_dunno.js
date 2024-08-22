@@ -143,11 +143,12 @@ addText("Gone Bananas \n \n   press I", {
 onInput("i", () => {
   if(level === 0){
     level = 1
+    setMap(levels[1])
     clearText()
-  }
+  }else{
   getFirst(player2).y -= 1
   playTune(walksound)
-
+  }
 })
 
 
@@ -214,6 +215,7 @@ afterInput(() =>  {
 if( tilesWith(player,spike).length > 0|| tilesWith(player,sword).length>0){
 setMap(levels[1])
   level = 2
+  setMap(levels[level])
   addText("player 2 won!\n \n \n \n \n  press A", { 
   x: 4,
   y: 1,
@@ -222,12 +224,10 @@ setMap(levels[1])
 };if( tilesWith(player2,spike).length > 0 || tilesWith(player2,sword).length>0){
 setMap(levels[1])
   level = 2
+  setMap(levels[level])
   addText("player 1 won!\n \n \n \n \n  press A", { 
   x: 4,
   y: 1,
   color: color`6`
 });
 };if(Math.random()>0.6){addSprite(Math.floor(Math.random() * 11),Math.floor(Math.random() * 11),spike)}})
-
-
-
