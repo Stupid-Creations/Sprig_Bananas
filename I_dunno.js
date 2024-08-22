@@ -146,46 +146,53 @@ onInput("i", () => {
     setMap(levels[1])
     clearText()
   }else{
+    if (getFirst(player2).y > 0){
   getFirst(player2).y -= 1
   playTune(walksound)
+  }
   }
 })
 
 
 onInput("j", () => {
+  if(getFirst(player2).x > 0){
   getFirst(player2).x -= 1
   getAll(sword)[1].x = getFirst(player2).x+1;
   playTune(walksound)
-
+  }
 })
 
 
 onInput("k", () => {
+  if(getFirst(player2).y < 10){
   getFirst(player2).y += 1
   playTune(walksound)
-
+  }
 })
 
 
 onInput("l", () => {
+  if(getFirst(player2).x < 10){
   getFirst(player2).x += 1
   getAll(sword)[1].x = getFirst(player2).x+1;
   playTune(walksound)
-
+  }
 })
 
 onInput("s", () => {
+  if(getFirst(player).y < 10){
   getFirst(player).y += 1
   playTune(walksound)
-
+  }
   
 })
 
 
 onInput("w", () => {
+  if(getFirst(player).y > 0){
   getFirst(player).y -= 1
   playTune(walksound)
-
+  }
 })
 
 
@@ -194,19 +201,21 @@ onInput("a", () => {
     setMap(levels[1])
     level = 1}
   clearText()
+  if(getFirst(player).x > 0){
   getFirst(player).x -= 1
   getAll(sword)[0].x = getFirst(player).x + 1
   playTune(walksound)
-
+  }
   
 })
 
 
 onInput("d", () => {
+  if(getFirst(player).x < 10){
   getFirst(player).x += 1
   getAll(sword)[0].x = getFirst(player).x + 1
   playTune(walksound)
-
+  }
 })
 
 afterInput(() =>  {
@@ -230,4 +239,4 @@ setMap(levels[1])
   y: 1,
   color: color`6`
 });
-};if(Math.random()>0.6){addSprite(Math.floor(Math.random() * 11),Math.floor(Math.random() * 11),spike)}})
+};if(Math.random()>0.6){addSprite(Math.floor(Math.random() * 10),Math.floor(Math.random() * 10),spike)}})
